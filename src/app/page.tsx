@@ -1,5 +1,10 @@
 import Image from "next/image";
+import { ChatBubbleIcon } from "./components/butttons/ChatBubbleButton";
 
 export default function Home() {
-  return <div>hi</div>;
+  return (
+    <div>
+      <ChatBubbleIcon />
+    </div>
+  );
 }
