@@ -1,5 +1,9 @@
 import { Dialog } from "@headlessui/react";
 import { useState } from "react";
+import { AgentProfile } from "../AgentProfile";
+import { LoadingDots } from "../LoadingDots";
+import { ModalHeader } from "./ModalHeader";
+import { ModalBody } from "./ModalBody";
 
 interface ChatModalProps {
   isOpen: boolean;
@@ -8,19 +12,13 @@ interface ChatModalProps {
 
 export const ChatModal = ({ isOpen, setIsOpen }: ChatModalProps) => {
   return (
-    <Dialog open={isOpen} onClose={() => setIsOpen(false)} className={""}>
-      <Dialog.Panel>
-        <Dialog.Title>Deactivate account</Dialog.Title>
-        <Dialog.Description>This will permanently deactivate your account</Dialog.Description>
-
-        <p>
-          Are you sure you want to deactivate your account? All of your data will be permanently removed. This
-          action cannot be undone.
-        </p>
-
-        <button onClick={() => setIsOpen(false)}>Deactivate</button>
-        <button onClick={() => setIsOpen(false)}>Cancel</button>
-      </Dialog.Panel>
-    </Dialog>
+    <div
+      className={`bg-white w-[375px] rounded-lg absolute right-6 bottom-6 h-[90dvh] ${
+        isOpen ? "" : "hidden"
+      }`}
+    >
+      <ModalHeader setIsOpen={setIsOpen} />
+      <ModalBody />
+    </div>
   );
 };

@@ -7,7 +7,7 @@ interface ChatBubbleIconProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 export const ChatBubbleIcon = ({ ...props }: ChatBubbleIconProps) => {
   return (
     <button
-      className='absolute flex items-center justify-center p-4 pb-3 bg-white rounded-full bottom-6 right-6'
+      className='fixed flex items-center justify-center p-4 pb-3 bg-white rounded-full bottom-6 right-6'
       {...props}
     >
       <i className='text-5xl ri-message-2-line text-primary' />
