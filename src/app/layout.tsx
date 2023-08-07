@@ -4,6 +4,7 @@ import "./styles/animations.css";
 
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { ChatWrapper } from "./contexts/ChatContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
