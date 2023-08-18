@@ -13,7 +13,6 @@ export const MessageListItem = ({ isFromChatBot, message }: MessageListItemProps
   const { increaseStep } = useChatContext();
 
   useEffect(() => {
-    console.log("hi");
     setIsThinking(true);
     setTimeout(() => {
       setIsThinking(false);
