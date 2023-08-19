@@ -104,14 +104,16 @@ interface MultipleChoiceListItemProps {
 }
 
 const MultipleChoiceListItem = ({ option }: MultipleChoiceListItemProps) => {
-  const { updateStep } = useChatContext();
+  const { updateStep, updateSession } = useChatContext();
 
   return (
     <button
+      id={option}
       className='p-3 text-sm font-medium text-black transition-colors duration-100 border border-gray-400 rounded-md hover:border-black w-fit'
       onClick={() => {
         updateStep("chat", "increase");
         updateStep("block", "reset");
+        updateSession("reasonForContact", option);
       }}
     >
       {option}

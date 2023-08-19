@@ -1,19 +1,5 @@
 import { ReactNode, createContext, useContext, useState } from "react";
 
-interface ChatContextType {
-  chatStep: number;
-  blockStep: number;
-  updateStep: (type: "chat" | "block", action: "increase" | "decrease" | "reset") => void;
-  updateSession: (key: string, value: string) => void;
-}
-
-const ChatContext = createContext<ChatContextType>({
-  chatStep: 0,
-  blockStep: 0,
-  updateStep: () => undefined,
-  updateSession: () => undefined,
-});
-
 interface Session {
   reasonForContact: string;
 }
@@ -21,6 +7,22 @@ interface Session {
 const sessionInitialState = {
   reasonForContact: "",
 };
+
+interface ChatContextType {
+  chatStep: number;
+  blockStep: number;
+  session: Session;
+  updateStep: (type: "chat" | "block", action: "increase" | "decrease" | "reset") => void;
+  updateSession: (key: string, value: string) => void;
+}
+
+const ChatContext = createContext<ChatContextType>({
+  chatStep: 0,
+  blockStep: 0,
+  session: sessionInitialState,
+  updateStep: () => undefined,
+  updateSession: () => undefined,
+});
 
 export const ChatWrapper = ({ children }: { children: ReactNode }) => {
   const [chatStep, setChatStep] = useState<number>(0);
@@ -42,6 +44,7 @@ export const ChatWrapper = ({ children }: { children: ReactNode }) => {
   const settings = {
     chatStep,
     blockStep,
+    session,
     updateStep,
     updateSession,
   };
