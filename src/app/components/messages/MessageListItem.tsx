@@ -10,13 +10,13 @@ interface MessageListItemProps {
 
 export const MessageListItem = ({ isFromChatBot, message }: MessageListItemProps) => {
   const [isThinking, setIsThinking] = useState<boolean>(false);
-  const { increaseStep } = useChatContext();
+  const { updateStep } = useChatContext();
 
   useEffect(() => {
     setIsThinking(true);
     setTimeout(() => {
       setIsThinking(false);
-      increaseStep();
+      updateStep("block", "increase");
     }, 2000);
   }, []);
 

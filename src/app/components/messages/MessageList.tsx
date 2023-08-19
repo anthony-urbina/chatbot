@@ -2,12 +2,17 @@ import { useChatContext } from "@/app/contexts/ChatContext";
 import { MessageListItem } from "./MessageListItem";
 import { useEffect, useState } from "react";
 
-interface Message {
+interface TextMessage {
   content: string;
-  // role: "user" | "chatbot";
-  // createdAt: Date;
-  type: "text" | "choice";
+  type: "text";
 }
+
+interface ChoiceMessage {
+  type: "choice";
+  options: string[];
+}
+
+type Message = TextMessage | ChoiceMessage;
 
 const greetingMessages: Message[] = [
   { type: "text", content: "Hey there, I'm Marty, your digital assistant!" },
@@ -18,7 +23,7 @@ const greetingMessages: Message[] = [
   },
 ];
 
-const greetingOptions = [
+const greetingOptions: Message[] = [
   {
     type: "choice",
     options: ["NFT Minting", "Smart Contracts", "DeFi Solutions", "Security Audits", "About us"],
@@ -35,22 +40,28 @@ const script = [
 ];
 
 export const MessageList = () => {
-  const { step: chatStep } = useChatContext();
+  const { blockStep, chatStep } = useChatContext();
 
   return (
     <ul className='flex flex-col justify-end h-full mx-2 gap-y-3'>
-      {script.map((step, idx) => {
+      {script.map((step, scriptIdx) => {
+        if (scriptIdx > chatStep) return null;
+
         if (step.type === "block") {
           return (
             <>
-              {step.content.map((item, idx) => {
-                if (idx > chatStep) return null;
+              {step.content.map((item, blockIdx) => {
+                if (blockIdx > blockStep && scriptIdx === chatStep) return null;
                 if (item.type === "text") {
                   return (
-                    <MessageListItem key={idx} isFromChatBot={step.role !== "user"} message={item.content} />
+                    <MessageListItem
+                      key={blockIdx}
+                      isFromChatBot={step.role !== "user"}
+                      message={item.content}
+                    />
                   );
                 } else if (item.type === "choice") {
-                  return <MultipleChoiceList key={idx} optionsList={item.options} />;
+                  return <MultipleChoiceList key={blockIdx} optionsList={item.options} />;
                 }
               })}
             </>
@@ -93,8 +104,16 @@ interface MultipleChoiceListItemProps {
 }
 
 const MultipleChoiceListItem = ({ option }: MultipleChoiceListItemProps) => {
+  const { updateStep } = useChatContext();
+
   return (
-    <button className='p-3 text-sm font-medium text-black transition-colors duration-100 border border-gray-400 rounded-md hover:border-black w-fit'>
+    <button
+      className='p-3 text-sm font-medium text-black transition-colors duration-100 border border-gray-400 rounded-md hover:border-black w-fit'
+      onClick={() => {
+        updateStep("chat", "increase");
+        updateStep("block", "reset");
+      }}
+    >
       {option}
     </button>
   );

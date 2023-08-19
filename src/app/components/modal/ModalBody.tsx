@@ -9,7 +9,7 @@ const promptFlow = [
 ];
 
 export const ModalBody = () => {
-  const { step } = useChatContext();
+  // const { step } = useChatContext();
   // const { messages, input, handleInputChange, handleSubmit, append } = useChat({
   //   initialInput: promptFlow[step],
   // });
